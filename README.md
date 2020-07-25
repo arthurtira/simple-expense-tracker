@@ -64,7 +64,8 @@ database that and expose the REST endpoints that can be consumed by
 frontend. It supports multiple HTTP REST methods like GET, POST, PUT and
 DELETE for the expense domain.
 
-The Swagger documentation for all the available endpoints can be found in Swagger UI, on this link: *http://localhost:8080/api/swagger-ui.html*
+The Swagger documentation for all the available endpoints can be found in Swagger UI, on this link: 
+*http://localhost:8080/api/v1/swagger-ui.html*
 
 The Dockerfile for the service is in the tracker-service root folder.
 
@@ -77,3 +78,5 @@ the tracker-service.
 The Dockerfile for this service is in the tracker-client root folder.
 
 It can be accessed using link: *http://localhost:4200/*
+
+Register an account and login and start tracking your expenses

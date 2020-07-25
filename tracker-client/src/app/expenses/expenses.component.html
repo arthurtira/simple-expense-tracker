@@ -74,11 +74,19 @@
                 <div class = "col-sm-10">
                     <p class="media-body pb-2 mb-1">
                     <strong class="d-block text-gray-dark">
-                        {{expense.description}} | {{ expense.expense_date}}
+                        {{expense.description}} 
                     </strong>
-                    <span class = "small">{{ expense.comment}} | <strong> {{ expense.currency}} {{ expense.amount}}</strong></span>
+                    <span class = "small">{{ expense.comment}} | <span class="blog-post-meta">{{ expense.expense_date}}</span>
+
+                    </span>
                     <br>
-                    <span class="badge badge-warning pb-2 pt-2 pl-3 pr-3 mb-2 mt-2 ">{{expense.category}}</span>
+                    <span *ngIf="expense.category==='HOUSEHOLD'"class="badge badge-success pb-2 pt-2 pl-3 pr-3 mb-2 mt-2">{{expense.category}}</span>
+                    <span *ngIf="expense.category==='EDUCATION'"class="badge badge-warning pb-2 pt-2 pl-3 pr-3 mb-2 mt-2">{{expense.category}}</span>
+                    <span *ngIf="expense.category==='SAVINGS'"class="badge badge-info pb-2 pt-2 pl-3 pr-3 mb-2 mt-2">{{expense.category}}</span>
+                    <span *ngIf="expense.category==='ENTERTAINMENT'"class="badge badge-dark pb-2 pt-2 pl-3 pr-3 mb-2 mt-2">{{expense.category}}</span>
+                    <span *ngIf="expense.category==='GROCERY'"class="badge badge-secondary pb-2 pt-2 pl-3 pr-3 mb-2 mt-2">{{expense.category}}</span>
+                    <span *ngIf="expense.category==='OTHER'"class="badge badge-light pb-2 pt-2 pl-3 pr-3 mb-2 mt-2">{{expense.category}}</span>
+                    |  {{ expense.currency}} {{ expense.amount}} 
                     </p>
                 </div>
                 <div class="col-sm-2 pt-3 mb-3">
