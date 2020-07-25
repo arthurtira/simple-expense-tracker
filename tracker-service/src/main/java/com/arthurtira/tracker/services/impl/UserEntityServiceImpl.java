@@ -1,6 +1,7 @@
 package com.arthurtira.tracker.services.impl;
 
 import com.arthurtira.tracker.dto.UserEntityDto;
+import com.arthurtira.tracker.exceptions.UserAlreadyExistsException;
 import com.arthurtira.tracker.mappers.UserEntityMapper;
 import com.arthurtira.tracker.model.UserEntity;
 import com.arthurtira.tracker.repository.UserEntityRepository;
@@ -36,7 +37,6 @@ public class UserEntityServiceImpl implements UserEntityService {
 
     @Override
     public Optional<UserEntity> findUserByPrincipal(Principal principal) {
-        log.debug("Principal {} " + principal.getName());
         Optional<UserEntity> userEntityOptional = repository.findUserEntityByUsername(principal.getName());
         if(userEntityOptional.isPresent()) {
             return Optional.of(userEntityOptional.get());
@@ -45,7 +45,12 @@ public class UserEntityServiceImpl implements UserEntityService {
     }
 
     @Override
-    public UserEntityDto createAccount(UserEntityDto userEntityDtoRequest) {
+    public UserEntityDto createAccount(UserEntityDto userEntityDtoRequest) throws UserAlreadyExistsException {
+        Optional<UserEntity> optionalUserEntity = repository.findUserEntityByUsername(userEntityDtoRequest.getUsername());
+        if(optionalUserEntity.isPresent()) {
+            throw new UserAlreadyExistsException("Username [" + userEntityDtoRequest.getUsername() + " ] already taken");
+        }
+        log.debug("Dto {} " + userEntityDtoRequest);
         UserEntity userEntity = this.userEntityMapper.fromDto(userEntityDtoRequest);
         log.debug("UserEntity {} " + userEntity);
         return userEntityMapper.toDto(repository.save(userEntity));

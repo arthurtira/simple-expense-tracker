@@ -1,13 +1,13 @@
   <main role="main" class="container">
     <div class="my-4 p-4 bg-white">
-        <div class="jumbotron" *ngIf="expenses !== undefined && expenses.data.items.length === 0">
+        <div class="jumbotron" *ngIf="expenses !== undefined && expenses.data.items.length === 0 && !search">
             <p>You have not captured your expenses yet. Click on the add expense button below and start tracking your expenses</p>
             <p class="lead p-2">
                 <a href="/expenses/add" class="btn btn-success btn-lg" role="button">
                     Capture your first expense</a>
             </p>
         </div>
-        <div *ngIf="expenses !== undefined && expenses.data.items.length > 0">
+        <div *ngIf="expenses !== undefined && expenses.data.items.length > 0 || search">
       <div class="pb-0 mb-0" >
 
         <form #filterExpenseForm="ngForm" (ngSubmit)="OnSubmit(filterExpenseForm)" >
@@ -63,7 +63,12 @@
             
           </form>  
       </div>
-       <div *ngIf="expenses !== undefined" class = "row"> 
+      <div class="alert alert-info" role="alert" *ngIf="expenses !== undefined && expenses.data.items.length === 0 && search">
+        No expense found for filter params [ Category:  {{ filter.category}},  From date:  {{ filter.fromDate}}  To date:  {{ filter.toDate}}]
+          <a href="/expenses/add" class="btn btn-success" role="button">
+              click here to add an expense</a>
+      </div>
+       <div *ngIf="expenses !== undefined && expenses.data.items.length > 0" class = "row"> 
            <div class = "col-sm-9">
             <div class="media text-muted pt-3 row lh-125 border-bottom border-gray"  *ngFor="let expense of expenses.data.items">
                 <div class = "col-sm-10">

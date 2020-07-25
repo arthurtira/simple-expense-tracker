@@ -24,6 +24,7 @@ export class UserService {
       firstName: user.firstName,
       lastName: user.lastName
     }
+    console.log(body)
     return this._http.post(this.rootUrl + '/auth/register', body);
   }
 

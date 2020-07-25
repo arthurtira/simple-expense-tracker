@@ -38,14 +38,6 @@ $ docker-compose down
 PostgreSQL database contains only single schema with two tables - scrum
 and task table.
 
-After running the app it can be accessible using this connectors:
-
-- Host: localhost
-- Database: tracker
-- User: postgres
-- Password: password
-
-
 Like other parts of application Postgres database is containerized and
 the definition of its Docker container can be found in
 docker-compose.yml file.
@@ -72,7 +64,7 @@ database that and expose the REST endpoints that can be consumed by
 frontend. It supports multiple HTTP REST methods like GET, POST, PUT and
 DELETE for the expense domain.
 
-The Swagger documentation for all the available endpoints can be found in Swagger UI,on this link: *http://localhost:8080/api/swagger-ui.html*
+The Swagger documentation for all the available endpoints can be found in Swagger UI, on this link: *http://localhost:8080/api/swagger-ui.html*
 
 The Dockerfile for the service is in the tracker-service root folder.
 
@@ -81,5 +73,7 @@ The Dockerfile for the service is in the tracker-service root folder.
 
 This is an Angular web application which the user can use to manage their expenses. It consumes the REST API endpoints provided by
 the tracker-service.
+
+The Dockerfile for this service is in the tracker-client root folder.
 
 It can be accessed using link: *http://localhost:4200/*

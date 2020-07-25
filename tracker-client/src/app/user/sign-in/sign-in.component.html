@@ -1,6 +1,6 @@
 <form class="form-signin" #userLoginForm="ngForm" (ngSubmit)="OnSubmit(userLoginForm)">
     <div class="text-center mb-4">
-      <h1 class="h3 mb-3 font-weight-normal">My Expenses Tracker</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Simple Tracker</h1>
       <p>Signin and start tracking your expenses</p>
     </div>
 
@@ -14,10 +14,9 @@
       name="password" #password="ngModel" [(ngModel)]="user.password" required>
     </div>
 
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
+    <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
+    <hr class = "mt-5">
+    <div class="text-center mb-4 p-5">
+      <p>Don't have an account yet? <a href="#" routerLink="/register"> Create your account here</a></p>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
   </form>

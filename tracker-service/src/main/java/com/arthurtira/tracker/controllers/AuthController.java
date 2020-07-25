@@ -3,6 +3,7 @@ package com.arthurtira.tracker.controllers;
 import com.arthurtira.tracker.dto.AuthRequestDto;
 import com.arthurtira.tracker.dto.AuthResponseDto;
 import com.arthurtira.tracker.dto.UserEntityDto;
+import com.arthurtira.tracker.exceptions.UserAlreadyExistsException;
 import com.arthurtira.tracker.services.AuthService;
 
 import com.arthurtira.tracker.services.UserEntityService;
@@ -47,7 +48,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> createUser(@RequestBody UserEntityDto userEntityDtoRequest) {
+    public ResponseEntity<?> createUser(@RequestBody UserEntityDto userEntityDtoRequest) throws UserAlreadyExistsException {
         log.debug("Create user {} ");
         return new ResponseEntity<>(this.userEntityService.createAccount(userEntityDtoRequest), HttpStatus.OK);
     }

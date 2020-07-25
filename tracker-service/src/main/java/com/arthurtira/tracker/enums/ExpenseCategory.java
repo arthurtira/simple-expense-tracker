@@ -1,7 +1,12 @@
 package com.arthurtira.tracker.enums;
 
 public enum ExpenseCategory {
-    HOUSEHOLD("All household expenses"), ENTERTAINMENT ("Entertainment is cool");
+    HOUSEHOLD("All household expenses"),
+    ENTERTAINMENT ("Entertainment is cool"),
+    GROCERY("Grocery"),
+    EDUCATION("Education"),
+    SAVINGS("Savings"),
+    OTHER("Other");
 
     private String description;
 

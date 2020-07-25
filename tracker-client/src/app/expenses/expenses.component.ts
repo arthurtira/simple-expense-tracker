@@ -8,7 +8,8 @@ import { ExpenseFilter } from './shared/filter.model'
 import { NgForm } from '@angular/forms';
 import { faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import { Expense } from './shared/expense.model';
+
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -23,16 +24,17 @@ export class ExpensesComponent implements OnInit {
   categories: any
   faMoneyBill = faMoneyBill;
   faFilter = faFilter;
+  search: boolean
 
   constructor(private _http: HttpService, 
-            private _router: Router) {  }
+            private _router: Router, 
+            private _toastr: ToastrService) {  }
 
   ngOnInit() {
     this.resetForm();
     this._http.getExpenses().subscribe(res => {
-      //console.log(res);
       this.expenses = res;
-      console.log(this.expenses)
+      this.search =false;
     }, 
     err => {
       if(err instanceof HttpErrorResponse) {
@@ -42,7 +44,6 @@ export class ExpensesComponent implements OnInit {
       }
     })
         
-
     this._http.getExpenseCategories().subscribe(
       res => {
         console.log(res)
@@ -67,8 +68,8 @@ export class ExpensesComponent implements OnInit {
   OnSubmit(form: NgForm) {
     console.log("On submit has been clicked ");
       this._http.getFilteredExpenses(form.value).subscribe(res => {
-        console.log(res);
         this.expenses = res;
+        this.search = true;
       }, 
       err => {
         if(err instanceof HttpErrorResponse) {
@@ -77,6 +78,14 @@ export class ExpensesComponent implements OnInit {
           }
         }
       })
+  }
+
+  showSuccess() {
+    this._toastr.success('Expense deleted successfully');
+  }
+
+  showError() {
+    this._toastr.error("Could not delete expense. Try again");
   }
 
   getExpenses() {
@@ -89,13 +98,14 @@ export class ExpensesComponent implements OnInit {
     console.log("Delete expense method clicked {} ")
     this._http.deleteExpense(expenseId).subscribe(
       res => {
-        console.log(res);
         if(res.status === 204){
          this.getExpenses();
+         this.showSuccess()
         }
       }, 
       err => {
         console.log(err)
+        this.showError()
       }
     )
   }

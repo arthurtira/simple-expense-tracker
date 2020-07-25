@@ -1,26 +1,26 @@
 <form class="form-signin" #userRegistrationForm="ngForm" (ngSubmit)="OnSubmit(userRegistrationForm)">
-    <div class="text-center mb-6">
-      <h1 class="h3 mb-6 font-weight-normal">My Expenses Tracker :: Register</h1>
+    <div class="text-center mb-4">
+      <h1 class="h3 mb-6 font-weight-normal">Simple Tracker :: Register</h1>
       <p>Create your account and start tracking your expenses</p>
     </div>
 
     <div class="form-label-group">
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address " 
+        <input type="text" id="inputEmail" class="form-control" placeholder="Email address " 
         name="email" #email="ngModel" [(ngModel)]="user.email" required autofocus>
       </div>
 
     <div class="form-label-group">
-      <input type="text" id="inputEmail" class="form-control" placeholder="Username" 
+      <input type="text" id="inputUsername" class="form-control" placeholder="Username" 
       name="username" #username="ngModel" [(ngModel)]="user.username"  required >
     </div>
 
     <div class="form-label-group">
-        <input type="text" id="inputEmail" class="form-control" placeholder="First name"
-        name="firstname" #firstName="ngModel" [(ngModel)]="user.firstName" required >
+        <input type="text" id="inputFirstName" class="form-control" placeholder="First name"
+        name="firstName" #firstName="ngModel" [(ngModel)]="user.firstName" required >
     </div>
 
     <div class="form-label-group">
-        <input type="text" id="inputEmail" class="form-control" placeholder="Last name" 
+        <input type="text" id="inputLastName" class="form-control" placeholder="Last name" 
         name="lastName" #lastName="ngModel" [(ngModel)]="user.lastName" required >
     </div>
 
@@ -29,6 +29,9 @@
         name="password" #password="ngModel" [(ngModel)]="user.password" required >
     </div>
 
-   
     <button class="btn btn-lg btn-success btn-block" type="submit">Create Accoumt</button>
+    <hr class = "mt-5">
+    <div class="text-center mb-4 p-3">
+      <p>Already have an account? <a href="#" routerLink="/login"> Login here</a></p>
+    </div>
   </form>
