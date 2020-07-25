@@ -35,8 +35,7 @@ $ docker-compose down
 
 #### tracker-postgres (Database)
 
-PostgreSQL database contains only single schema with two tables - scrum
-and task table.
+PostgreSQL database contains only single schema with two tables - expenses and user_entity
 
 Like other parts of application Postgres database is containerized and
 the definition of its Docker container can be found in
