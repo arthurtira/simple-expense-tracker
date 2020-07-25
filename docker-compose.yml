@@ -21,7 +21,7 @@ services:
   # Back-end Spring Boot application for the APIs
   tracker-service:
     #The docker file in tracker-service build the jar and provides the docker image with the following name.
-    build: ./tracker
+    build: ./tracker-service
     container_name: tracker-service
 
     environment:
@@ -36,8 +36,8 @@ services:
 
   #Front-end Angular application
   tracker-client:
-    build: ./expenses-tracker-client
-    container_name: expenses-tracker-client
+    build: ./tracker-client
+    container_name: tracker-client
     ports:
       - 4200:80
     links:

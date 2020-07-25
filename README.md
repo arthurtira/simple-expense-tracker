@@ -50,7 +50,7 @@ Like other parts of application Postgres database is containerized and
 the definition of its Docker container can be found in
 docker-compose.yml file.
 
-yml
+```yml
 scrum-postgres:
     image: "postgres:9.6-alpine"
     container_name: scrum-postgres
@@ -62,6 +62,7 @@ scrum-postgres:
       - POSTGRES_DB:scrum
       - POSTGRES_USER:scrum
       - POSTGRES_PASSWORD:scrum
+```
 
 
 #### tracker-service (REST API)
