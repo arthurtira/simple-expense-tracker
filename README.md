@@ -51,17 +51,17 @@ the definition of its Docker container can be found in
 docker-compose.yml file.
 
 ```yml
-scrum-postgres:
+tracker-postgres:
     image: "postgres:9.6-alpine"
-    container_name: scrum-postgres
+    container_name: tracker-postgres
     volumes:
-      - scrum-data:/var/lib/postgresql/data
+      - tracker-data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_DB:scrum
-      - POSTGRES_USER:scrum
-      - POSTGRES_PASSWORD:scrum
+      - POSTGRES_DB:tracker
+      - POSTGRES_USER:postgres
+      - POSTGRES_PASSWORD:password
 ```
 
 
