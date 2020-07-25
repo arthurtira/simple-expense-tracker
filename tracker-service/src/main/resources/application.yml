@@ -1,0 +1,49 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+
+logging:
+  level:
+    com.arthurtira.tracker: DEBUG
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+
+spring:
+  application:
+    name: tracker
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tracker
+    username: postgres
+    password: password
+  jpa:
+    generate-ddl: true
+    open-in-view: true
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        enable_lazy_load_no_trans: true
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _HISTORY
+            store_data_at_delete: true
+        show_sql: false
+        use_sql_comments: false
+        format_sql: false
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+  data:
+    redis:
+      repositories:
+        enabled: false
+
+tracker:
+  secret:
+    key: SOME_VERY_LONG_SECURE_SECRET_KEY

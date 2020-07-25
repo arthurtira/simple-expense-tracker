@@ -1,0 +1,23 @@
+<form class="form-signin" #userLoginForm="ngForm" (ngSubmit)="OnSubmit(userLoginForm)">
+    <div class="text-center mb-4">
+      <h1 class="h3 mb-3 font-weight-normal">My Expenses Tracker</h1>
+      <p>Signin and start tracking your expenses</p>
+    </div>
+
+    <div class="form-label-group">
+      <input type="text" id="inputEmail" class="form-control" placeholder="Username" 
+        name="username" #username="ngModel" [(ngModel)]="user.username" required autofocus>
+    </div>
+
+    <div class="form-label-group">
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" 
+      name="password" #password="ngModel" [(ngModel)]="user.password" required>
+    </div>
+
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  </form>

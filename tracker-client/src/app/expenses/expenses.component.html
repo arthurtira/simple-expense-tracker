@@ -1,0 +1,129 @@
+  <main role="main" class="container">
+    <div class="my-4 p-4 bg-white">
+        <div class="jumbotron" *ngIf="expenses !== undefined && expenses.data.items.length === 0">
+            <p>You have not captured your expenses yet. Click on the add expense button below and start tracking your expenses</p>
+            <p class="lead p-2">
+                <a href="/expenses/add" class="btn btn-success btn-lg" role="button">
+                    Capture your first expense</a>
+            </p>
+        </div>
+        <div *ngIf="expenses !== undefined && expenses.data.items.length > 0">
+      <div class="pb-0 mb-0" >
+
+        <form #filterExpenseForm="ngForm" (ngSubmit)="OnSubmit(filterExpenseForm)" >
+            <div class="form-row">
+              <div class="col-md-3 mb-3">
+                <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-4 col-form-label">Category</label>
+                    <div class="col-sm-8">
+                        <select class="custom-select" id="inlineFormCustomSelectPref" name="category" #category="ngModel" [(ngModel)]="filter.category">
+                            <option value = "All" selected>Expense Category</option>
+                            <option *ngFor="let item of categories">
+                                {{item.type}}
+                            </option>
+                        </select>
+                    </div>
+                  </div>
+               
+              </div>
+             
+              <div class="col-md-8 mb-3">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="fromDate" class="col-sm-3 col-form-label text-right">From </label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="fromDate" placeholder="From date" required
+                                name="fromDate" #amount="ngModel" [(ngModel)]="filter.fromDate">
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-3 col-form-label text-right">To</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="validationCustom03" placeholder="From date" required
+                                name="toDate" #amount="ngModel" [(ngModel)]="filter.toDate">
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                </div>
+               
+              </div>
+             
+              <div class="col-md-1 mb-3 text-right">
+                <button class="btn btn-success" type="submit">
+                     Filter</button>
+              </div>
+              
+            </div>
+            
+          </form>  
+      </div>
+       <div *ngIf="expenses !== undefined" class = "row"> 
+           <div class = "col-sm-9">
+            <div class="media text-muted pt-3 row lh-125 border-bottom border-gray"  *ngFor="let expense of expenses.data.items">
+                <div class = "col-sm-10">
+                    <p class="media-body pb-2 mb-1">
+                    <strong class="d-block text-gray-dark">
+                        {{expense.description}} | {{ expense.expense_date}}
+                    </strong>
+                    <span class = "small">{{ expense.comment}} | <strong> {{ expense.currency}} {{ expense.amount}}</strong></span>
+                    <br>
+                    <span class="badge badge-warning pb-2 pt-2 pl-3 pr-3 mb-2 mt-2 ">{{expense.category}}</span>
+                    </p>
+                </div>
+                <div class="col-sm-2 pt-3 mb-3">
+                    <div class = "form-row">
+                        <a type="button" class="btn btn-sm btn-secondary col-sm-5" href="#" routerLink="/expenses/{{expense.expense_id}}"> edit</a>
+                        <div class = "col-sm-1"></div>
+                        <button (click) = "removeExpense(expense.expense_id)" type="button" class="btn btn-sm btn-danger col-sm-5">X</button>
+                    </div>
+                </div>
+    
+            </div>
+            <small class="d-block text-right mt-3">
+                <a href="/expenses/add" class="btn btn-success" role="button">
+                    Add an expense</a>
+        
+              </small>
+           </div>  
+           <div class = "col-sm-3">
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title mb-0 pb-0">Spending Summary</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item ">
+                    <h5 class="card-title pb-3 mb-2">Total Spent</h5>  
+                    <span class="badge badge-pill badge-primary pb-2 pt-2 pl-3 pr-3 mb-2">{{ expenses.data.summary.currency }} {{expenses.data.summary.totalSpent}}</span>
+                  </li>
+                  <li class="list-group-item ">
+                    <h5 class="card-title pb-3 mb-2">Average per day</h5>  
+                    <span class="badge badge-info pb-2 pt-2 pl-3 pr-3 mb-2">{{ expenses.data.summary.currency }} {{expenses.data.summary.dailyAverage}}</span>
+                  </li>
+                  <li class="list-group-item">
+                    <h5 class="card-title pb-3 mb-2">Spending Period </h5>  
+                    <span class="badge badge-light pb-2 pt-2 pl-3 pr-3 mb-2">{{expenses.data.summary.startDate}} - {{ expenses.data.summary.endDate}}</span>
+                  </li>
+                  <li class="list-group-item">
+                    <h5 class="card-title pb-3 mb-2">Category </h5>  
+                    <span class="badge badge-warning pb-2 pt-2 pl-3 pr-3 mb-2">{{expenses.data.summary.category}}</span>
+                  </li>
+                  
+                </ul>
+                
+              </div>
+           </div>
+
+      </div> 
+
+      </div>
+    
+    </div>
+
+
+  </main>

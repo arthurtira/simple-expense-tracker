@@ -1,0 +1,48 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+version: '3'
+
+#Define services
+services:
+  #PostgreSQL database for the application
+  tracker-postgres:
+    image: "postgres:9.6-alpine"
+    container_name: tracker-postgres
+    volumes:
+      - tracker-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432 
+
+    #Environment variable for DB name, user and password
+    environment:
+      - POSTGRES_DB=tracker
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+
+  # Back-end Spring Boot application for the APIs
+  tracker-service:
+    #The docker file in tracker-service build the jar and provides the docker image with the following name.
+    build: ./tracker
+    container_name: tracker-service
+
+    environment:
+      - DB_SERVER=tracker-postgres
+      - POSTGRES_DB=tracker
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - 8080:8080 
+    links:
+      - tracker-postgres
+
+  #Front-end Angular application
+  tracker-client:
+    build: ./expenses-tracker-client
+    container_name: expenses-tracker-client
+    ports:
+      - 4200:80
+    links:
+      - tracker-service
+
+#Volumes for DB data
+volumes:
+  tracker-data:
