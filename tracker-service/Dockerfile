@@ -1,11 +1,18 @@
-FROM maven:3.6.1-jdk-8-slim AS build
-RUN mkdir -p /workspace
-WORKDIR /workspace
-COPY pom.xml /workspace
-COPY src /workspace/src
-RUN mvn -f pom.xml clean package
+FROM maven:3.5.2-jdk-8-alpine AS MAVEN_BUILD
 
-FROM openjdk:8-alpine
-COPY --from=build /workspace/target/*.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","app.jar"]
+MAINTAINER tiraarthur@gmail.com
+
+COPY pom.xml /build/
+COPY src /build/src/
+
+WORKDIR /build/
+
+RUN mvn package
+
+FROM openjdk:8-jre-alpine
+
+WORKDIR /app
+
+COPY --from=MAVEN_BUILD /build/target/tracker-0.0.1-SNAPSHOT.jar /app/
+
+ENTRYPOINT ["java", "-jar", "tracker-0.0.1-SNAPSHOT.jar"]

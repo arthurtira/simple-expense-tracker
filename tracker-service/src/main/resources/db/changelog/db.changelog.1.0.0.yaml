@@ -1,0 +1,83 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.0_create_expense_table
+      author: Arthur Tira
+      validCheckSum: 8:25158e58ee6f1dd01587ff3aca1f6f75
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: expense_pkey
+                  name: id
+                  type: BIGSERIAL
+              - column:
+                  name: entity_id
+                  type: VARCHAR(255)
+              - column:
+                  name: created_on
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: updated_on
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: amount
+                  type: numeric(19,2)
+              - column:
+                  name: category
+                  type: VARCHAR(255)
+              - column:
+                  name: comment
+                  type: VARCHAR(500)
+              - column:
+                  name: description
+                  type: VARCHAR(500)
+              - column:
+                  name: user_entity_id
+                  type: bigint
+            tableName: expense
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_entity_pkey
+                  name: id
+                  type: BIGSERIAL
+              - column:
+                  name: entity_id
+                  type: VARCHAR(255)
+              - column:
+                  name: created_on
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: updated_on
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  name: password
+                  type: VARCHAR(100)
+              - column:
+                  name: username
+                  type: VARCHAR(50)
+              - column:
+                  name: email
+                  type: VARCHAR(50)
+            tableName: user_entity
+
+        - addForeignKeyConstraint:
+            baseColumnNames: user_entity_id
+            baseTableName: expense
+            constraintName: fk_user_entity_id
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: user_entity

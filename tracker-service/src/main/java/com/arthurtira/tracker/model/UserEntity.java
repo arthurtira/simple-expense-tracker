@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 @Data
 @ToString(exclude = "password")
 public class UserEntity extends AbstractEntity {
+    private String email;
     private String firstName;
     private String lastName;
     private String username;

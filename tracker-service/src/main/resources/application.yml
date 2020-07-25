@@ -7,23 +7,25 @@ logging:
   level:
     com.arthurtira.tracker: DEBUG
     org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
-
 spring:
   application:
     name: tracker
   profiles:
     active: dev
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    enabled: true
   main:
     allow-bean-definition-overriding: true
   jackson:
     serialization:
       write-dates-as-timestamps: false
   datasource:
-    url: jdbc:postgresql://localhost:5432/tracker
-    username: postgres
-    password: password
+    url: jdbc:postgresql://${DB_SERVER:localhost:5432}/${POSTGRES_DB:tracker}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:password}
   jpa:
-    generate-ddl: true
+    generate-ddl: false
     open-in-view: true
     properties:
       hibernate:
