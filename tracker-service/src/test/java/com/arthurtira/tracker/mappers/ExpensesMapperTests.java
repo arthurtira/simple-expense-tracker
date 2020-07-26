@@ -11,6 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {MapperConfig.class})
 public class ExpensesMapperTests {
@@ -21,10 +24,16 @@ public class ExpensesMapperTests {
     @Test
     public void fromDTO() {
         Expense expense = buildExpense();
-
         ExpenseDto expenseDto  = buildExpenseDto();
+        assertThat(mapper.fromDto(expenseDto)).isEqualToIgnoringGivenFields(expense, "createdOn", "entityId");
 
-        //assertThat(mapper.fromDto(expenseDto)).isEqualToIgnoringGivenFields(expense, "createdOn, entityId");
+    }
+
+    @Test
+    public void toDto() {
+        Expense expense = buildExpense();
+        ExpenseDto expenseDto  = buildExpenseDto();
+        assertThat(mapper.toDto(expense)).isEqualToIgnoringGivenFields(expenseDto, "currency");
 
     }
 
@@ -36,6 +45,7 @@ public class ExpensesMapperTests {
                 .comment("comment")
                 .amount(BigDecimal.TEN)
                 .category("HOUSEHOLD")
+                .expenseId("ID")
                 .build();
     }
 
@@ -46,6 +56,7 @@ public class ExpensesMapperTests {
         expense.setCategory("HOUSEHOLD");
         expense.setAmount(BigDecimal.TEN);
         expense.setCreatedOn(new Date());
+        expense.setEntityId("ID");
 
         return expense;
     }

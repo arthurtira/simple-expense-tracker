@@ -9,7 +9,6 @@ import com.arthurtira.tracker.model.Expense;
 import com.arthurtira.tracker.model.UserEntity;
 import com.arthurtira.tracker.repository.ExpensesRepository;
 import com.arthurtira.tracker.services.ExpensesService;
-import com.arthurtira.tracker.dto.ExpenseResponseData;
 import com.arthurtira.tracker.dto.ExpensesSummaryDto;
 import com.arthurtira.tracker.util.DateUtil;
 import com.arthurtira.tracker.wrappers.ExpensesResponseWrapper;
@@ -66,6 +65,9 @@ public class ExpensesServiceImpl implements ExpensesService {
     }
 
     private ExpensesResponseWrapper buildResponse(Page<Expense> expenses, ExpensesFilterRequest request) {
+        if(expenses == null) {
+            return ExpensesResponseWrapper.builder().build();
+        }
         List<ExpenseDto> expenseDtos = this.mapper.toDtoStream(expenses.get())
                 .peek(expenseDto -> expenseDto.setCurrency(currency))
                 .collect(Collectors.toList());
@@ -93,19 +95,15 @@ public class ExpensesServiceImpl implements ExpensesService {
                 .spendingByCategory(totalByCategory)
                 .build();
 
-        ExpenseResponseData data = ExpenseResponseData.builder()
-                .items(expenseDtos)
-                .summary(expensesSummary)
-                .build();
-
-        log.debug("Data response {} " + data);
+        log.debug("Summary response {} " + expensesSummary);
 
         return ExpensesResponseWrapper.builder()
                 .page(expenses.getNumber())
                 .size(expenses.getNumberOfElements())
                 .totalItems(expenses.getTotalElements())
                 .totalPages(expenses.getTotalPages())
-                .data(data)
+                .data(expenseDtos)
+                .summary(expensesSummary)
                 .build();
     }
 

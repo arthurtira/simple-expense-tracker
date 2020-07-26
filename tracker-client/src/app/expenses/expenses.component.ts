@@ -32,27 +32,9 @@ export class ExpensesComponent implements OnInit {
 
   ngOnInit() {
     this.resetForm();
-    this._http.getExpenses().subscribe(res => {
-      this.expenses = res;
-      this.search =false;
-    }, 
-    err => {
-      if(err instanceof HttpErrorResponse) {
-        if(err.status === 403) {
-          this._router.navigate(['/login'])
-        }
-      }
-    })
-        
-    this._http.getExpenseCategories().subscribe(
-      res => {
-        console.log(res)
-        this.categories = res;
-      }, 
-      err => {
-        console.log(err)
-      }
-    );
+    this.getExpenses();
+    this.getCategories();  
+    
   }
 
   resetForm(form?: NgForm) {
@@ -91,7 +73,27 @@ export class ExpensesComponent implements OnInit {
   getExpenses() {
     this._http.getExpenses().subscribe(res => {
       this.expenses = res;
-    });
+      this.search =false;
+    }, 
+    err => {
+      if(err instanceof HttpErrorResponse) {
+        if(err.status === 403) {
+          this._router.navigate(['/login'])
+        }
+      }
+    })
+  }
+
+  getCategories() {
+    this._http.getExpenseCategories().subscribe(
+      res => {
+        console.log(res)
+        this.categories = res;
+      }, 
+      err => {
+        console.log(err)
+      }
+    );
   }
 
   removeExpense(expenseId: String) {

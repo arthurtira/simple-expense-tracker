@@ -8,7 +8,6 @@ import com.arthurtira.tracker.model.UserEntity;
 import com.arthurtira.tracker.repository.ExpensesRepository;
 import com.arthurtira.tracker.services.ExpensesService;
 import com.arthurtira.tracker.services.UserEntityService;
-import com.arthurtira.tracker.dto.ExpenseResponseData;
 import com.arthurtira.tracker.wrappers.ExpensesResponseWrapper;
 import org.junit.After;
 import org.mockito.MockitoAnnotations;
@@ -141,7 +140,7 @@ public class ExpensesControllerTests {
         ExpensesResponseWrapper responseWrapper = ExpensesResponseWrapper.builder()
                 .size(20)
                 .page(0)
-                .data(ExpenseResponseData.builder().items(expenseDtos).build())
+                .data(expenseDtos)
                 .totalItems(1)
                 .totalPages(1)
                 .build();
@@ -156,7 +155,7 @@ public class ExpensesControllerTests {
         Mockito.verify(expensesService, times(1)).getExpenses(userEntity, filterRequest, pageable);
         assertNotNull(result);
         assertNotNull(result.getBody());
-        assertEquals(result.getBody().getData().getItems().size(), expenseDtos.size());
+        assertEquals(result.getBody().getData().size(), expenseDtos.size());
     }
 
     @Test

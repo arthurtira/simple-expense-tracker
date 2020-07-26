@@ -1,9 +1,12 @@
 package com.arthurtira.tracker.wrappers;
 
-import com.arthurtira.tracker.dto.ExpenseResponseData;
+import com.arthurtira.tracker.dto.ExpenseDto;
+import com.arthurtira.tracker.dto.ExpensesSummaryDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.List;
 
 
 @Data
@@ -14,5 +17,6 @@ public class ExpensesResponseWrapper<T> {
     private int page;
     private long totalItems;
     private int totalPages;
-    private ExpenseResponseData data;
+    private List<ExpenseDto> data;
+    private ExpensesSummaryDto summary;
 }
