@@ -20,7 +20,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @EnableWebSecurity
 public class ExpensesSecurityConfigurer extends WebSecurityConfigurerAdapter {
@@ -76,10 +78,14 @@ public class ExpensesSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Bean
     public FilterRegistrationBean<CorsFilter> simpleCorsFilter() {
+        List<String> origins = new ArrayList<>();
+        origins.add("http://localhost:4200");
+        origins.add("http://ec2-3-250-170-228.eu-west-1.compute.amazonaws.com:4200");
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+        config.setAllowedOrigins(origins);
         config.setAllowedMethods(Collections.singletonList("*"));
         config.setAllowedHeaders(Collections.singletonList("*"));
         source.registerCorsConfiguration("/**", config);
