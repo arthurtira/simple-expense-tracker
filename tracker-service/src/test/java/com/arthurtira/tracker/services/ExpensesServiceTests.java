@@ -2,6 +2,7 @@ package com.arthurtira.tracker.services;
 
 import com.arthurtira.tracker.dto.ExpenseDto;
 import com.arthurtira.tracker.dto.ExpensesFilterRequest;
+import com.arthurtira.tracker.exceptions.BadRequestException;
 import com.arthurtira.tracker.mappers.MapperConfig;
 import com.arthurtira.tracker.model.Expense;
 import com.arthurtira.tracker.model.UserEntity;
@@ -46,7 +47,7 @@ public class ExpensesServiceTests {
     }
 
     @Test
-    public void createExpense_valid() {
+    public void createExpense_valid() throws BadRequestException {
         UserEntity userEntity = new UserEntity();
         ExpenseDto expenseDto = createTestExpenseDTO();
         when(userEntityService.findUserEntityByUsername("username")).thenReturn(userEntity);

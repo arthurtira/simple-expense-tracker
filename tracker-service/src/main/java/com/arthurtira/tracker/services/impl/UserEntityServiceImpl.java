@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.util.Optional;
 
-@Service@Slf4j
+@Service
+@Slf4j
 public class UserEntityServiceImpl implements UserEntityService {
     private final UserEntityRepository repository;
     private final JwtUtil jwtUtil;

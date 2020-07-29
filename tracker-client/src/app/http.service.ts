@@ -3,13 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Expense } from './expenses/shared/expense.model';
 import { ExpenseFilter } from './expenses/shared/filter.model';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
   
-  readonly rootUrl = "http://localhost:8080/api/v1/expenses"
+  readonly rootUrl = environment.api_url + "/expenses"
   constructor(private _http: HttpClient) { }
 
   getExpenses(){

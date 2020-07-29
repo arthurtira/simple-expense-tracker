@@ -5,6 +5,7 @@ import { Router } from '@angular/router'
 import {Observable} from 'rxjs';
 import { User } from './user.model';
 import { Login } from './login.model';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ import { Login } from './login.model';
 })
 export class UserService {
 
-  readonly rootUrl = 'http://localhost:8080/api/v1';
+  readonly rootUrl = environment.api_url ;
   
   constructor(private _http: HttpClient, private _router : Router) { }
 

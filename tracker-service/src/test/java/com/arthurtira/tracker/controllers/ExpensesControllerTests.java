@@ -3,6 +3,7 @@ package com.arthurtira.tracker.controllers;
 import com.arthurtira.tracker.dto.ExpenseDto;
 import com.arthurtira.tracker.dto.ExpenseType;
 import com.arthurtira.tracker.dto.ExpensesFilterRequest;
+import com.arthurtira.tracker.exceptions.BadRequestException;
 import com.arthurtira.tracker.exceptions.ExpenseNotFoundException;
 import com.arthurtira.tracker.model.UserEntity;
 import com.arthurtira.tracker.repository.ExpensesRepository;
@@ -77,7 +78,7 @@ public class ExpensesControllerTests {
     }
 
     @Test
-    public void createExpense_RequestIsValid_createRequestAccepted() {
+    public void createExpense_RequestIsValid_createRequestAccepted() throws BadRequestException {
         ExpenseDto expenseDto = buildExpenseDto();
         UserEntity userEntity = buildUserEntity();
 
@@ -102,7 +103,7 @@ public class ExpensesControllerTests {
 
         try {
             controller.createExpense(paymentDTO, principal);
-        } catch (RuntimeException e) {
+        } catch (RuntimeException | BadRequestException e) {
             assertTrue(e instanceof RuntimeException);
             Mockito.verify(userEntityService, times(1)).findUserByPrincipal(principal);
         }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router'
 
 import { Expense } from '../shared/expense.model';
@@ -17,6 +17,8 @@ export class AddExpenseComponent implements OnInit {
 
   categories: any
   expense: Expense;
+  hasError: boolean;
+  errorMessage: string;
 
   constructor(private _http: HttpService, private _router: Router, private toastr: ToastrService) { }
 
@@ -36,10 +38,6 @@ export class AddExpenseComponent implements OnInit {
 
   showSuccess() {
     this.toastr.success('Expense added successfully');
-  }
-
-  showError() {
-    this.toastr.error("Could not add expense. Try again");
   }
 
   resetForm(form?: NgForm) {
@@ -67,7 +65,8 @@ export class AddExpenseComponent implements OnInit {
         },
         err => {
           console.log(err)
-          this.showError();
+          this.hasError = true;
+          this.errorMessage = err.error.errorMessage;
         }
       );
   }

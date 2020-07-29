@@ -3,6 +3,7 @@ package com.arthurtira.tracker.controllers;
 import com.arthurtira.tracker.dto.AuthRequestDto;
 import com.arthurtira.tracker.dto.AuthResponseDto;
 import com.arthurtira.tracker.dto.UserEntityDto;
+import com.arthurtira.tracker.exceptions.BadRequestException;
 import com.arthurtira.tracker.exceptions.UserAlreadyExistsException;
 import com.arthurtira.tracker.services.AuthService;
 
@@ -36,11 +37,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequestDto requestDto) {
+    public ResponseEntity<?> login(@RequestBody AuthRequestDto requestDto) throws BadRequestException {
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestDto.getUsername(), requestDto.getPassword()));
         }catch (BadCredentialsException e){
-            throw new RuntimeException("Username or password incorrect");
+            throw new BadRequestException("Username or password incorrect. Try again");
         }
 
         String jwt = authService.login(requestDto.getUsername());

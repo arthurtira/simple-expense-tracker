@@ -22,8 +22,27 @@ public class CustomGlobalExceptionHander extends ResponseEntityExceptionHandler 
                 .build(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({ExpenseNotFoundException.class, UserAlreadyExistsException.class})
+    @ExceptionHandler(ExpenseNotFoundException.class)
     public final ResponseEntity<Object> handleExpenseNotFoundException(ExpenseNotFoundException ex , WebRequest req) {
+        return new ResponseEntity<>(CustomExpenseErrorResponse.builder()
+                .errorMessage(ex.getMessage())
+                .timestamp(new Date())
+                .message("Expense not found ")
+                .build(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public final ResponseEntity<Object> handleUserAlreadyExistsException(ExpenseNotFoundException ex , WebRequest req) {
+        return new ResponseEntity<>(CustomExpenseErrorResponse.builder()
+                .errorMessage(ex.getMessage())
+                .timestamp(new Date())
+                .message("User already exists")
+                .build(), HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(BadRequestException.class)
+    public final ResponseEntity<Object> handleBadRequestException(BadRequestException ex , WebRequest req) {
         return new ResponseEntity<>(CustomExpenseErrorResponse.builder()
                 .errorMessage(ex.getMessage())
                 .timestamp(new Date())

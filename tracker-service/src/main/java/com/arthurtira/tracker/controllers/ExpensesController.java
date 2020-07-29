@@ -3,6 +3,7 @@ package com.arthurtira.tracker.controllers;
 import com.arthurtira.tracker.dto.CustomResponse;
 import com.arthurtira.tracker.dto.ExpenseDto;
 import com.arthurtira.tracker.dto.ExpensesFilterRequest;
+import com.arthurtira.tracker.exceptions.BadRequestException;
 import com.arthurtira.tracker.exceptions.ExpenseNotFoundException;
 import com.arthurtira.tracker.model.Expense;
 import com.arthurtira.tracker.model.UserEntity;
@@ -39,7 +40,6 @@ public class ExpensesController {
     }
 
     @GetMapping
-    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<ExpensesResponseWrapper> getAllExpenses(@RequestParam(required = false, defaultValue = "20") String size,
                                                                   @RequestParam(required = false, defaultValue = "0") String page,
                                                                   @RequestParam(required = false, defaultValue = "All") String category,
@@ -82,7 +82,7 @@ public class ExpensesController {
     }
 
     @PostMapping
-    public ResponseEntity<ExpenseDto> createExpense(@RequestBody @Valid ExpenseDto expenseDto, Principal principal) {
+    public ResponseEntity<ExpenseDto> createExpense(@RequestBody @Valid ExpenseDto expenseDto, Principal principal) throws BadRequestException {
         Optional<UserEntity> userEntityDtoOptional = this.userEntityService.findUserByPrincipal(principal);
         if(!userEntityDtoOptional.isPresent()) {
             throw new RuntimeException("User not logged in");

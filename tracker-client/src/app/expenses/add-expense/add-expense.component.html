@@ -1,5 +1,10 @@
 <main role="main" class="container">
     <div class = "row">
+        <div class="col-sm-12 mt-3">
+            <div *ngIf = "hasError" class="alert alert-danger" role="alert">
+                {{ errorMessage}}
+              </div>
+        </div>
     <div class = "col-sm-3"></div>
     <div class="my-4 p-4 col-sm-6">
         <div class="card">
@@ -20,8 +25,8 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputAddress">Amount</label>
-                            <input type="text" class="form-control" id="inputAddress" placeholder="250.00" 
-                              name="amount" #amount="ngModel" [(ngModel)]="expense.amount">
+                            <input type="number" class="form-control" id="inputAddress" placeholder="250.00" 
+                              name="amount" #amount="ngModel" [(ngModel)]="expense.amount" required>
                           </div>
 
                       </div>
@@ -29,13 +34,13 @@
                     <div class="form-group">
                     <label for="inputPassword4">Description</label>
                     <input type="text" class="form-control" id="description" placeholder="Expense description"
-                        name="description" #description="ngModel" [(ngModel)]="expense.description" >
+                        name="description" #description="ngModel" [(ngModel)]="expense.description" minlength="10" required>
                     </div>
                    
                     <div class="form-group">
                       <label for="inputAddress2">Comment</label>
                       <textarea class="form-control" rows="5" id="comment" placeholder="Expense detailed comment"
-                        name="comment" #comment="ngModel" [(ngModel)]="expense.comment"></textarea>
+                        name="comment" #comment="ngModel" [(ngModel)]="expense.comment" minlength="10" required></textarea>
                       
                     </div>
                    

@@ -4,6 +4,7 @@ import com.arthurtira.tracker.dto.ExpenseDto;
 import com.arthurtira.tracker.dto.ExpenseType;
 import com.arthurtira.tracker.dto.ExpensesFilterRequest;
 import com.arthurtira.tracker.enums.ExpenseCategory;
+import com.arthurtira.tracker.exceptions.BadRequestException;
 import com.arthurtira.tracker.mappers.ExpensesMapper;
 import com.arthurtira.tracker.model.Expense;
 import com.arthurtira.tracker.model.UserEntity;
@@ -124,7 +125,11 @@ public class ExpensesServiceImpl implements ExpensesService {
 
 
     @Override
-    public ExpenseDto createExpense(ExpenseDto expenseDto, UserEntity userEntity) {
+    public ExpenseDto createExpense(ExpenseDto expenseDto, UserEntity userEntity) throws BadRequestException {
+
+        if(validateInput(expenseDto).size() > 0) {
+            throw new BadRequestException(validateInput(expenseDto).toString());
+        }
         Expense expense = this.mapper.fromDto(expenseDto);
         log.debug(" Expense {} " + expense);
         expense.setUserEntity(userEntity);
@@ -162,4 +167,20 @@ public class ExpensesServiceImpl implements ExpensesService {
         return groups;
 
     }
+
+    private List<String> validateInput(ExpenseDto expenseDto) {
+        List<String> errors = new ArrayList<>();
+        if(expenseDto.getAmount() == null || expenseDto.getAmount().equals(BigDecimal.ZERO))
+            errors.add("Amount cannot be 0");
+        if(expenseDto.getCategory() == null || "".equals(expenseDto.getCategory()))
+            errors.add("Category cannot be null");
+        if(expenseDto.getComment() == null || "".equals(expenseDto.getComment()))
+            errors.add("Comment is required");
+
+        if(expenseDto.getDescription() == null || "".equals(expenseDto.getDescription()))
+            errors.add("Description is required");
+        
+        return  errors;
+    }
+
 }
